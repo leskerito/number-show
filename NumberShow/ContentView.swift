@@ -8,12 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+   @State private var count = 1
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text("\(count)")
+                .font(.system(size: 500))
+                .onTapGesture(count: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/, perform: {
+                    count += 1
+                    print("Single tap")
+                })
+                .gesture(
+                DragGesture()
+                    .onEnded { value in
+                        if value.translation.width < 0 {
+                            count -= 1
+                            print("Swipe left")
+                        }
+                    }
+                )
         }
         .padding()
     }
